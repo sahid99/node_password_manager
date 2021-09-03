@@ -11,10 +11,10 @@ const signIn = async (req, res) => {
 			password
 		}
 		const result = await db.collection("password_manager").insertOne(user);
-		res.status(200).json(result);
+		return res.status(200).json(result);
 	}
 
-	res.status(500).json({ message: "Server error"});
+	return res.status(500).json({ message: "Server error"});
 }
 
 module.exports = { signIn };
