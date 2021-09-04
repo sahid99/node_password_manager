@@ -12,14 +12,18 @@ const signIn = async (req, res) => {
 		}
 		const result = await db.collection("password_manager").findOne({username});
 		
-		if(result.password == password){
-			return res.status(200).json({success: true});
+		if(!result){
+			return res.status(401).json({success: false, message: "The username doesn't exists in database."});
 		}
 
-		return res.status(401).json({success: false});
+		if(result.password == password){
+			return res.status(200).json({success: true, message: `Welcome ${result.username}.`});
+		}
+
+		return res.status(401).json({success: false, message: "Incorrer password."});
 	}
 
-	return res.status(500).json({ message: "Server error"});
+	return res.status(500).json({ success: false, message: "Server error"});
 }
 
 const signUp = async (req, res) => {
@@ -32,11 +36,15 @@ const signUp = async (req, res) => {
 			username,
 			password
 		}
+		const getUser = await db.collection("password_manager").findOne({username});
+		if(getUser){
+			return res.status(401).json({success: false, message: "The username is already in use."});
+		}
 		const result = await db.collection("password_manager").insertOne(user);
-		return res.status(200).json(result);
+		return res.status(200).json({success: true, message: "Good to go."});
 	}
 
-	return res.status(500).json({ message: "Server error"});
+	return res.status(500).json({ success: false, message: "Server error"});
 }
 
 module.exports = { signIn, signUp };
