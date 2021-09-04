@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const dotenv = require('dotenv');
 const app = express();
 const authRoutes = require("./routes/auth");
+const passwordManager = require("./routes/password_manager");
 
 //settings
 dotenv.config({ path: './.env' });
@@ -16,6 +17,7 @@ app.use(express.json());
 // routes
 app.use(require("./routes/index"));
 app.use("/auth", authRoutes);
+app.use("/password", passwordManager)
 
 //db
 

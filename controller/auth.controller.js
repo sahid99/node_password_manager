@@ -10,7 +10,7 @@ const signIn = async (req, res) => {
 			username,
 			password
 		}
-		const result = await db.collection("password_manager").findOne({username});
+		const result = await db.collection("user").findOne({username});
 		
 		if(!result){
 			return res.status(401).json({success: false, message: "The username doesn't exists in database."});
@@ -36,11 +36,11 @@ const signUp = async (req, res) => {
 			username,
 			password
 		}
-		const getUser = await db.collection("password_manager").findOne({username});
+		const getUser = await db.collection("user").findOne({username});
 		if(getUser){
 			return res.status(401).json({success: false, message: "The username is already in use."});
 		}
-		const result = await db.collection("password_manager").insertOne(user);
+		const result = await db.collection("user").insertOne(user);
 		return res.status(200).json({success: true, message: "Good to go."});
 	}
 
