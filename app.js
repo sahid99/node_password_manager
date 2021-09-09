@@ -5,6 +5,7 @@ const app = express();
 const authRoutes = require("./routes/auth");
 const passwordManager = require("./routes/password_manager");
 const document = require("./routes/document");
+const news = require("./routes/news");
 
 //settings
 dotenv.config({ path: './.env' });
@@ -20,6 +21,7 @@ app.use(require("./routes/index"));
 app.use("/auth", authRoutes);
 app.use("/password", passwordManager);
 app.use("/document", document);
+app.use("/news", news);
 
 // Empezando el servidor
 app.listen(app.get("port"), () => {
