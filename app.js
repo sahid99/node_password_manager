@@ -8,7 +8,7 @@ const document = require("./routes/document");
 
 //settings
 dotenv.config({ path: './.env' });
-app.set("port", process.env.PORT || 3000)
+app.set("port", process.env.PORT || 8022)
 
 // middlewares 
 app.use(morgan("dev"));
