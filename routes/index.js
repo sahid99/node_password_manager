@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 router.get("/", (req, res) => {
-    res.json({"title":"Sahid's API.", "message":"Hello from Sahid's API!!"});
+    res.json({"title":"Password Manager API.", "message":"Hello from Password Manager API!!"});
 });
 
 
