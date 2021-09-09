@@ -8,7 +8,7 @@ const document = require("./routes/document");
 
 //settings
 dotenv.config({ path: './.env' });
-app.set("port", process.env.PORT || 8022)
+app.set("port", process.env.PORT || 8022);
 
 // middlewares 
 app.use(morgan("dev"));
@@ -20,9 +20,6 @@ app.use(require("./routes/index"));
 app.use("/auth", authRoutes);
 app.use("/password", passwordManager);
 app.use("/document", document);
-
-//db
-
 
 // Empezando el servidor
 app.listen(app.get("port"), () => {
