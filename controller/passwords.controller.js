@@ -5,7 +5,7 @@ const addPassword = async (req, res) => {
 	const { db } = await connectToDatabase();
 	const { username, Nombre, Carpeta, URL, Usernamepass, Contrasena, Notas } = req.body;
    
-	if(username && password && site){
+	if(username && Nombre && Contrasena){
 		const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){
