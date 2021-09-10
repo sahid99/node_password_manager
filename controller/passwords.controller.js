@@ -26,7 +26,7 @@ const addPassword = async (req, res) => {
 		
 		const result = await db.collection("password_manager").find({username}).toArray();
 
-		return res.status(200).json({result});
+		return res.status(200).json(result);
    }
 
    return res.status(500).json({ success: false, message: "Server error"});
@@ -56,9 +56,9 @@ const getPasswords = async (req, res) => {
 
 const modifyPassword = async (req, res) => {
     const { db } = await connectToDatabase();
-	const { username, password, site, _id } = req.body;
+	const { username, Nombre, Carpeta, URL, Usernamepass, Contrasena, Notas, _id } = req.body;
     
-    if(username && password && site && _id){
+    if(username && Nombre && Carpeta && URL){
         const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){
@@ -73,12 +73,18 @@ const modifyPassword = async (req, res) => {
 
         const passwordObj = {
 			username,
-			password, 
-			site
+			Nombre, 
+			Carpeta, 
+			URL, 
+			Usernamepass, 
+			Contrasena, 
+			Notas
 		}
 
-        const result = await db.collection("password_manager").updateOne( {'_id': ObjectId(_id)}, { $set: passwordObj } )
-        return res.status(200).json({success: true, message: "The password was updated."});
+        const resultUpdate = await db.collection("password_manager").updateOne( {'_id': ObjectId(_id)}, { $set: passwordObj } )
+        const result = await db.collection("password_manager").find({username}).toArray();
+
+		return res.status(200).json(result);
 
     }
 
@@ -103,9 +109,11 @@ const deletePassword = async (req, res) => {
 			return res.status(401).json({success: false, message: "The password doesn't exists in database."});
         } 
 
-		const result = await db.collection("password_manager").findOneAndDelete({'_id': ObjectId(_id)});
+		const resultDelete = await db.collection("password_manager").findOneAndDelete({'_id': ObjectId(_id)});
 
-        return res.status(200).json({success: true, message: "The password was deleted."});
+        const result = await db.collection("password_manager").find({username}).toArray();
+
+		return res.status(200).json(result);
 		
 	}
 
