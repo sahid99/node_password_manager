@@ -5,6 +5,7 @@ const app = express();
 const authRoutes = require("./routes/auth");
 const passwordManager = require("./routes/password_manager");
 const document = require("./routes/document");
+const account = require("./routes/account");
 const news = require("./routes/news");
 
 //settings
@@ -21,6 +22,7 @@ app.use(require("./routes/index"));
 app.use("/auth", authRoutes);
 app.use("/password", passwordManager);
 app.use("/document", document);
+app.use("/cuentas", account);
 app.use("/news", news);
 
 // Empezando el servidor

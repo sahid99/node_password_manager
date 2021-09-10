@@ -1,7 +1,7 @@
 const { ObjectId } = require("mongodb");
 const { connectToDatabase } = require("../db");
 
-const addDocument = async (req, res) => {
+const addAccount = async (req, res) => {
 	const { db } = await connectToDatabase();
 	const { username, type, curp, docId } = req.body;
 
@@ -25,8 +25,8 @@ const addDocument = async (req, res) => {
             docId
         }
 
-        const resultInsert = await db.collection("documents").insertOne(document);
-        const result = await db.collection("documents").find({username}).toArray();
+        const resultInsert = await db.collection("accounts").insertOne(document);
+        const result = await db.collection("accounts").find({username}).toArray();
 		return res.status(200).json(result);
 
     }
@@ -35,7 +35,7 @@ const addDocument = async (req, res) => {
 
 } 
 
-const getDocuments = async (req, res) => {
+const getAccounts = async (req, res) => {
 	const { db } = await connectToDatabase();
 	const { username } = req.body;
 
@@ -46,7 +46,7 @@ const getDocuments = async (req, res) => {
 			return res.status(401).json({success: false, message: "The username doesn't exists in database."});
         }
         
-        const result = await db.collection("documents").find({username}).toArray();
+        const result = await db.collection("accounts").find({username}).toArray();
 		return res.status(200).json(result);
 
     }
@@ -55,7 +55,7 @@ const getDocuments = async (req, res) => {
 
 }
 
-const modifyDocument = async (req, res) => {
+const modifyAccount = async (req, res) => {
     const { db } = await connectToDatabase();
 	const { username, type, curp, docId, _id } = req.body;
     
@@ -66,7 +66,7 @@ const modifyDocument = async (req, res) => {
 			return res.status(401).json({success: false, message: "The username doesn't exists in database."});
         }
         
-        const getDocument = await db.collection("documents").findOne({'_id': ObjectId(_id)});
+        const getDocument = await db.collection("accounts").findOne({'_id': ObjectId(_id)});
 			
 		if(!getDocument){
 			return res.status(401).json({success: false, message: "The document doesn't exists in database."});
@@ -79,8 +79,8 @@ const modifyDocument = async (req, res) => {
             docId,
         }
 
-        const resultModify = await db.collection("documents").updateOne( {'_id': ObjectId(_id)}, { $set: document } )
-        const result = await db.collection("documents").find({username}).toArray();
+        const resultModify = await db.collection("accounts").updateOne( {'_id': ObjectId(_id)}, { $set: document } )
+        const result = await db.collection("accounts").find({username}).toArray();
 		return res.status(200).json(result);
 
     }
@@ -89,7 +89,7 @@ const modifyDocument = async (req, res) => {
     
 }
 
-const deleteDocument = async (req, res) => {
+const deleteAccount = async (req, res) => {
 	const { db } = await connectToDatabase();
 	const { username, _id } = req.body;
 
@@ -100,14 +100,14 @@ const deleteDocument = async (req, res) => {
 			return res.status(401).json({success: false, message: "The username doesn't exists in database."});
 		}
 
-		const getDocument = await db.collection("documents").findOne({'_id': ObjectId(_id)});
+		const getDocument = await db.collection("accounts").findOne({'_id': ObjectId(_id)});
 			
 		if(!getDocument){
 			return res.status(401).json({success: false, message: "The document doesn't exists in database."});
         } 
 
-		const resultDelete = await db.collection("documents").findOneAndDelete({'_id': ObjectId(_id)});
-        const result = await db.collection("documents").find({username}).toArray();
+		const resultDelete = await db.collection("accounts").findOneAndDelete({'_id': ObjectId(_id)});
+        const result = await db.collection("accounts").find({username}).toArray();
 		return res.status(200).json(result);
 		
 	}
@@ -115,4 +115,4 @@ const deleteDocument = async (req, res) => {
 	return res.status(500).json({ success: false, message: "Server error"});    
 }
 
-module.exports = { addDocument, getDocuments, modifyDocument, deleteDocument };
+module.exports = { addAccount, getAccounts, modifyAccount, deleteAccount };
