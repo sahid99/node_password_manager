@@ -5,7 +5,7 @@ const addDocument = async (req, res) => {
 	const { db } = await connectToDatabase();
 	const { username, NombreDoc, TipoDoc, NumeroDoc, PersonaDoc, NotasAcc } = req.body;
 
-    if(username, NombreDoc, TipoDoc, NumeroDoc){
+    if(username && NombreDoc && TipoDoc && NumeroDoc){
         const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){
@@ -61,7 +61,7 @@ const modifyDocument = async (req, res) => {
     const { db } = await connectToDatabase();
 	const { username, NombreDoc, TipoDoc, NumeroDoc, PersonaDoc, NotasAcc, _id } = req.body;
     
-    if(username, NombreDoc, TipoDoc, NumeroDoc, _id){
+    if(username && NombreDoc && TipoDoc && NumeroDoc && _id){
         const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){

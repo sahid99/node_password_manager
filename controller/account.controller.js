@@ -5,7 +5,7 @@ const addAccount = async (req, res) => {
 	const { db } = await connectToDatabase();
 	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc } = req.body;
 
-    if(username, NombreAcc, TarjetaAcc, CodigoAcc){
+    if(username && NombreAcc && TarjetaAcc && CodigoAcc){
         const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){
@@ -61,7 +61,7 @@ const modifyAccount = async (req, res) => {
     const { db } = await connectToDatabase();
 	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc, _id } = req.body;
     
-    if(username, NombreAcc, TarjetaAcc, CodigoAcc, _id){
+    if(username && NombreAcc && TarjetaAcc && CodigoAcc && _id){
         const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){
