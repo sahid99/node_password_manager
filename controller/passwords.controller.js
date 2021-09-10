@@ -3,7 +3,7 @@ const { ObjectId } = require("mongodb")
 
 const addPassword = async (req, res) => {
 	const { db } = await connectToDatabase();
-	const { username, password, site } = req.body;
+	const { username, Nombre, Carpeta, URL, Usernamepass, Contrasena, Notas } = req.body;
    
 	if(username && password && site){
 		const getUser = await db.collection("user").findOne({username});
@@ -14,12 +14,19 @@ const addPassword = async (req, res) => {
 
 		const passwordObj = {
 			username,
-			password, 
-			site
+			Nombre, 
+			Carpeta, 
+			URL, 
+			Usernamepass, 
+			Contrasena, 
+			Notas
 		}
 
-		const result = await db.collection("password_manager").insertOne(passwordObj);
-		return res.status(200).json({success: true, message: "The password was stored."});
+		const resultInsert = await db.collection("password_manager").insertOne(passwordObj);
+		
+		const result = await db.collection("password_manager").find({username}).toArray();
+
+		return res.status(200).json({result});
    }
 
    return res.status(500).json({ success: false, message: "Server error"});
@@ -40,7 +47,7 @@ const getPasswords = async (req, res) => {
 		
 		const result = await db.collection("password_manager").find({username}).toArray();
 
-		return res.status(200).json({success: true, result});
+		return res.status(200).json({result});
 	}
 
 	return res.status(500).json({ success: false, message: "Server error"});
