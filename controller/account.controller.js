@@ -3,9 +3,9 @@ const { connectToDatabase } = require("../db");
 
 const addAccount = async (req, res) => {
 	const { db } = await connectToDatabase();
-	const { username, type, curp, docId } = req.body;
+	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc } = req.body;
 
-    if(username, type, curp, docId){
+    if(username, NombreAcc, TarjetaAcc, CodigoAcc){
         const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){
@@ -20,9 +20,11 @@ const addAccount = async (req, res) => {
         
         const document = {
             username, 
-            type,
-            curp,
-            docId
+            NombreAcc, 
+            TarjetaAcc, 
+            CodigoAcc, 
+            NumeroAcc, 
+            DateAcc
         }
 
         const resultInsert = await db.collection("accounts").insertOne(document);
@@ -57,9 +59,9 @@ const getAccounts = async (req, res) => {
 
 const modifyAccount = async (req, res) => {
     const { db } = await connectToDatabase();
-	const { username, type, curp, docId, _id } = req.body;
+	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc, _id } = req.body;
     
-    if(username, type, curp, docId, _id){
+    if(username, NombreAcc, TarjetaAcc, CodigoAcc, _id){
         const getUser = await db.collection("user").findOne({username});
 			
 		if(!getUser){
@@ -74,9 +76,11 @@ const modifyAccount = async (req, res) => {
 
         const document = {
             username, 
-            type,
-            curp,
-            docId,
+            NombreAcc, 
+            TarjetaAcc, 
+            CodigoAcc, 
+            NumeroAcc, 
+            DateAcc
         }
 
         const resultModify = await db.collection("accounts").updateOne( {'_id': ObjectId(_id)}, { $set: document } )
