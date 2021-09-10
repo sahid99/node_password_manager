@@ -87,4 +87,30 @@ const modifyDocument = async (req, res) => {
     
 }
 
-module.exports = { addDocument, getDocuments, modifyDocument };
+const deleteDocument = async (req, res) => {
+	const { db } = await connectToDatabase();
+	const { username, _id } = req.body;
+
+	if(username && _id){
+		const getUser = await db.collection("user").findOne({username});
+			
+		if(!getUser){
+			return res.status(401).json({success: false, message: "The username doesn't exists in database."});
+		}
+
+		const getDocument = await db.collection("documents").findOne({'_id': ObjectId(_id)});
+			
+		if(!getDocument){
+			return res.status(401).json({success: false, message: "The document doesn't exists in database."});
+        } 
+
+		const result = await db.collection("documents").findOneAndDelete({'_id': ObjectId(_id)});
+
+        return res.status(200).json({success: true, message: "The documents was deleted."});
+		
+	}
+
+	return res.status(500).json({ success: false, message: "Server error"});    
+}
+
+module.exports = { addDocument, getDocuments, modifyDocument, deleteDocument };
