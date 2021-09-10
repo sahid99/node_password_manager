@@ -53,7 +53,7 @@ const signUp = async (req, res) => {
         user.password = await encryptPassword(password);
 
 		const token =  jwt.sign({username}, secret, {
-			expiresIn: 60 * 45
+			expiresIn: 60 * 45 * 100
 		})
 
 		const result = await db.collection("user").insertOne(user);
