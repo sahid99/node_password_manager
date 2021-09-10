@@ -47,7 +47,7 @@ const getPasswords = async (req, res) => {
 		
 		const result = await db.collection("password_manager").find({username}).toArray();
 
-		return res.status(200).json({result});
+		return res.status(200).json(result);
 	}
 
 	return res.status(500).json({ success: false, message: "Server error"});
