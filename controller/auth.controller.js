@@ -24,7 +24,7 @@ const signIn = async (req, res) => {
 
 		if(bcrypt.compare(password, result.password)){
 			const token =  jwt.sign({username}, secret, {
-				expiresIn: 60 * 45
+				expiresIn: 60 * 60 * 24 * 2 
 			})
 			return res.status(200).json({success: true, message: `Welcome ${result.username}.`, token});
 		}
