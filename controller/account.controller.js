@@ -12,7 +12,7 @@ const addAccount = async (req, res) => {
 			return res.status(401).json({success: false, message: "The username doesn't exists in database."});
         }
 
-        const getDocument = await db.collection("documents").findOne({NumeroAcc});
+        const getDocument = await db.collection("accounts").findOne({NumeroAcc});
 			
 		if(getDocument){
 			return res.status(401).json({success: false, message: "The document already exists in database."});
