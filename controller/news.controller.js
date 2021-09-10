@@ -6,8 +6,9 @@ const getNoticias = async (req, res) => {
         const URL = `https://newsapi.org/v2/top-headlines?country=mx&apiKey=58bb9178ef434836ab475a40e90b693a`;
         const result = await axios.get(URL);
         const { data } = result;
-
-        res.json({ data });
+        let { articles } = data;
+        articles = articles.slice(0,5);
+        res.json({ articles });
     } catch (error) {
         //console.log(error);
         res.status(500).json({ success: false, message: "Server error"});
