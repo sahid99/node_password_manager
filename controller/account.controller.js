@@ -41,6 +41,8 @@ const getAccounts = async (req, res) => {
 	const { db } = await connectToDatabase();
 	const { username } = req.body;
 
+    console.log(username);
+
     if(username){
         const getUser = await db.collection("user").findOne({username});
 			
