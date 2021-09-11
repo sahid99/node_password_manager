@@ -15,7 +15,8 @@ const verifyToken = (req, res, next) => {
         next();
 
 	}catch(err){
-		return res.status(500).json({ success: false, message: "Server error"});
+        console.log("token error: ", err)
+		return res.status(500).json({ success: false, message: "token error"});
 	}
 }
 
