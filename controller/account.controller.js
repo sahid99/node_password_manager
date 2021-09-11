@@ -3,7 +3,7 @@ const { connectToDatabase } = require("../db");
 
 const addAccount = async (req, res) => {
 	const { db } = await connectToDatabase();
-	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc } = req.body;
+	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc, TipoAcc } = req.body;
 
     if(username && NombreAcc && TarjetaAcc && CodigoAcc){
         const getUser = await db.collection("user").findOne({username});
@@ -24,7 +24,8 @@ const addAccount = async (req, res) => {
             TarjetaAcc, 
             CodigoAcc, 
             NumeroAcc, 
-            DateAcc
+            DateAcc,
+            TipoAcc
         }
 
         const resultInsert = await db.collection("accounts").insertOne(document);
@@ -61,7 +62,7 @@ const getAccounts = async (req, res) => {
 
 const modifyAccount = async (req, res) => {
     const { db } = await connectToDatabase();
-	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc, _id } = req.body;
+	const { username, NombreAcc, TarjetaAcc, CodigoAcc, NumeroAcc, DateAcc, TipoAcc, _id } = req.body;
     
     if(username && NombreAcc && TarjetaAcc && CodigoAcc && _id){
         const getUser = await db.collection("user").findOne({username});
@@ -82,7 +83,8 @@ const modifyAccount = async (req, res) => {
             TarjetaAcc, 
             CodigoAcc, 
             NumeroAcc, 
-            DateAcc
+            DateAcc,
+            TipoAcc
         }
 
         const resultModify = await db.collection("accounts").updateOne( {'_id': ObjectId(_id)}, { $set: document } )
