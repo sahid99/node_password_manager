@@ -29,3 +29,5 @@ app.use("/news", news);
 app.listen(app.get("port"), () => {
     console.log(`Server at http://localhost:${app.get("port")}`);
 }); 
+
+module.exports = app;
